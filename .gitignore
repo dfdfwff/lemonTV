@@ -1,0 +1,42 @@
+# IDE and IDE-related files
+.idea/
+.kotlin/
+.qoder/
+*.iml
+
+# Build system
+.gradle/
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+# Local configuration files
+local.properties
+key.properties
+
+# Signing files (sensitive)
+*.jks
+*.keystore
+
+# Release files (local build artifacts)
+/release/
+RELEASE_NOTES_*.md
+build-release-enhanced.bat
+build-release.bat
+rename-and-prepare-release.bat
+
+# Other unnecessary files
+icon_original.png
+/pic/
+/screenshots/
+playback.xml
+发布说明.MD
+密钥.txt
+柠檬TV优化界面设计_v4.html
+CHANGELOG.md
+RELEASE_GUIDE.html
+
+# OS files
+.DS_Store
+Thumbs.db
