@@ -37,7 +37,7 @@ jobs:
       run: |
         # 下载第一个源文件
         echo "下载 migu.m3u ..."
-        curl -s -L -o migu.m3u "https://raw.githubusercontent.com/ioptu/migu_video/main/migu.m3u"
+        curl -s -L -o migu.m3u "https://gh-proxy.org/github.com/ioptu/migu_video/raw/refs/heads/main/migu.m3u"
         
         # 下载第二个源文件
         echo "下载 cctv.migu.m3u ..."

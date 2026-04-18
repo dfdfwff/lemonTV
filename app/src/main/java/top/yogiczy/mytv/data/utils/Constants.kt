@@ -25,7 +25,7 @@ object Constants {
      */
     val IPTV_SOURCE_DEFAULT_LIST = listOf(
         IPTV_SOURCE_URL,
-        "https://gh-proxy.org/github.com/ioptu/IPTV.txt2m3u.player/raw/refs/heads/main/migu.m3u",
+        "https://gh-proxy.org/github.com/ioptu/migu_video/raw/refs/heads/main/migu.m3u",
         // APTV 第三默认源
         "https://gh.aptv.app/https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u",
     )
