@@ -94,7 +94,7 @@ jobs:
     
     - name: Send email notification
       if: steps.compare.outputs.changed == 'true'
-      uses: dawidd6/action-send-mail@v4
+      uses: dawidd6/action-send-mail@v16
       with:
         server_address: smtp.gmail.com
         server_port: 465
