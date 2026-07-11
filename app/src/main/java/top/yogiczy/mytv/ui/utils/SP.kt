@@ -60,6 +60,9 @@ object SP {
         /** 直播源历史列表 */
         IPTV_SOURCE_URL_HISTORY_LIST,
 
+        /** 已删除的直播源列表 */
+        IPTV_SOURCE_DELETED_LIST,
+
         /** 直播源名称映射 */
         IPTV_SOURCE_NAME_MAP,
 
@@ -191,6 +194,17 @@ object SP {
     var iptvSourceUrlHistoryList: Set<String>
         get() = sp.getStringSet(KEY.IPTV_SOURCE_URL_HISTORY_LIST.name, emptySet()) ?: emptySet()
         set(value) = sp.edit().putStringSet(KEY.IPTV_SOURCE_URL_HISTORY_LIST.name, value).apply()
+
+    /** 已删除的直播源列表 */
+    var iptvSourceDeletedList: Set<String>
+        get() = sp.getStringSet(KEY.IPTV_SOURCE_DELETED_LIST.name, emptySet()) ?: emptySet()
+        set(value) = sp.edit().putStringSet(KEY.IPTV_SOURCE_DELETED_LIST.name, value).apply()
+
+    /** 获取所有可用的直播源列表（默认源 + 历史源，排除已删除） */
+    fun getIptvSourceList(): List<String> =
+        (Constants.IPTV_SOURCE_DEFAULT_LIST + iptvSourceUrlHistoryList)
+            .distinct()
+            .filter { it !in iptvSourceDeletedList }
 
     /** 直播源名称映射 */
     var iptvSourceNameMap: Map<String, String>

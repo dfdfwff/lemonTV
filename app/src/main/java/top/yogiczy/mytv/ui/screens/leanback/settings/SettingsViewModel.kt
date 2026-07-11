@@ -114,6 +114,14 @@ class LeanbackSettingsViewModel : ViewModel() {
             SP.iptvSourceUrlHistoryList = value
         }
 
+    private var _iptvSourceDeletedList by mutableStateOf(SP.iptvSourceDeletedList)
+    var iptvSourceDeletedList: Set<String>
+        get() = _iptvSourceDeletedList
+        set(value) {
+            _iptvSourceDeletedList = value
+            SP.iptvSourceDeletedList = value
+        }
+
     private var _iptvSourceNameMap by mutableStateOf(SP.iptvSourceNameMap)
     var iptvSourceNameMap: Map<String, String>
         get() = _iptvSourceNameMap

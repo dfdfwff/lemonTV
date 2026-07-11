@@ -94,7 +94,7 @@ fun LeanbackMainContent(
     onSourceSwitchRequiredCallback = { currentSourceUrl ->
         // 当前源失败率过高，自动切换到下一个源
         coroutineScope.launch {
-            val allSources = (top.yogiczy.mytv.data.utils.Constants.IPTV_SOURCE_DEFAULT_LIST + SP.iptvSourceUrlHistoryList).distinct()
+            val allSources = SP.getIptvSourceList()
             val currentIndex = allSources.indexOf(currentSourceUrl)
             
             // 记录失败的源

@@ -63,8 +63,7 @@ fun LeanbackQuickPanelIptvSourceDialog(
     LaunchedEffect(showDialogProvider()) {
         if (showDialogProvider()) {
             while (true) {
-                val allSources = (Constants.IPTV_SOURCE_DEFAULT_LIST + SP.iptvSourceUrlHistoryList)
-                    .distinct()
+                val allSources = SP.getIptvSourceList()
                 sourceList = allSources
                 nameMap = SP.iptvSourceNameMap
                 delay(1000)

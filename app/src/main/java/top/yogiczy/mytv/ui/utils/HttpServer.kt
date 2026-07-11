@@ -134,6 +134,7 @@ object HttpServer : Loggable() {
         // 避免 UI 通过“当前值 == 列表项”计算 selected/勾选状态时自动选中新推送的数据。
         if (iptvSourceUrl.isNotBlank()) {
             SP.iptvSourceUrlHistoryList = SP.iptvSourceUrlHistoryList + iptvSourceUrl
+            SP.iptvSourceDeletedList = SP.iptvSourceDeletedList - iptvSourceUrl
             // 保存名称映射（同时用于节目单列表展示）
             if (iptvSourceName.isNotBlank()) {
                 SP.iptvSourceNameMap = SP.iptvSourceNameMap + (iptvSourceUrl to iptvSourceName)

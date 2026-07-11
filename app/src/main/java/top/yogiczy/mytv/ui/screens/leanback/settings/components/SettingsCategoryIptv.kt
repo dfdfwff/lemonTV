@@ -140,9 +140,7 @@ fun LeanbackSettingsCategoryIptv(
             LeanbackSettingsIptvSourceHistoryDialog(showDialogProvider = { showDialog },
                 onDismissRequest = { showDialog = false },
                 iptvSourceHistoryProvider = {
-                    settingsViewModel.iptvSourceUrlHistoryList.filter {
-                        it != Constants.IPTV_SOURCE_URL
-                    }.toImmutableList()
+                    SP.getIptvSourceList().toImmutableList()
                 },
                 currentIptvSourceProvider = { settingsViewModel.iptvSourceUrl },
                 onSelected = {
@@ -155,8 +153,16 @@ fun LeanbackSettingsCategoryIptv(
                         Log.i("SettingsCategoryIptv", "已调用 onIptvSourceChanged()")
                     }
                 },
-                onDeleted = {
-                    settingsViewModel.iptvSourceUrlHistoryList -= it
+                onDeleted = { source ->
+                    settingsViewModel.iptvSourceUrlHistoryList -= source
+                    settingsViewModel.iptvSourceDeletedList += source
+                    if (settingsViewModel.iptvSourceUrl == source) {
+                        val remaining = SP.getIptvSourceList()
+                        if (remaining.isNotEmpty()) {
+                            settingsViewModel.iptvSourceUrl = remaining.first()
+                            onIptvSourceChanged()
+                        }
+                    }
                 })
         }
 
@@ -185,7 +191,7 @@ private fun LeanbackSettingsIptvSourceHistoryDialog(
     onDeleted: (String) -> Unit = {},
 ) {
     // 使用 State 来存储历史记录，以便可以动态更新
-    var iptvSourceHistory by remember { mutableStateOf(listOf(Constants.IPTV_SOURCE_URL) + iptvSourceHistoryProvider()) }
+    var iptvSourceHistory by remember { mutableStateOf(iptvSourceHistoryProvider().toList()) }
     var nameMap by remember { mutableStateOf(SP.iptvSourceNameMap) }
     val currentIptvSource = currentIptvSourceProvider()
 
@@ -195,8 +201,7 @@ private fun LeanbackSettingsIptvSourceHistoryDialog(
             while (true) {
                 delay(1000) // 每秒检查一次
                 // 直接从 SP 读取最新数据，合并默认源列表和历史记录
-                val newHistory = (Constants.IPTV_SOURCE_DEFAULT_LIST + SP.iptvSourceUrlHistoryList)
-                    .distinct()
+                val newHistory = SP.getIptvSourceList()
                 val newNameMap = SP.iptvSourceNameMap
                 if (newHistory != iptvSourceHistory || newNameMap != nameMap) {
                     iptvSourceHistory = newHistory
@@ -252,8 +257,10 @@ private fun LeanbackSettingsIptvSourceHistoryDialog(
                                         else focusRequester.requestFocus()
                                     },
                                     onLongSelect = {
-                                        if (isFocused) onDeleted(source)
-                                        else focusRequester.requestFocus()
+                                        if (isFocused) {
+                                            onDeleted(source)
+                                            iptvSourceHistory = iptvSourceHistory.filter { it != source }
+                                        } else focusRequester.requestFocus()
                                     },
                                 ),
                             selected = isSelected,
